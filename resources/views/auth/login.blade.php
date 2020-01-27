@@ -29,7 +29,7 @@
                         <div class="billing checkout_box">
                             <div class="checkout_title">Masuk</div>
                             <div class="checkout_form_container">
-                                <form method="POST" action="{{ route('login') }}" id="checkout_form" class="checkout_form">
+                                <form method="POST" action="{{ url('login') }}" id="checkout_form" class="checkout_form">
                                 @csrf
                                     <div>
                                         <label for="checkout_email">Email</label>

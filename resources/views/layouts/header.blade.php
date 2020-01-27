@@ -109,7 +109,7 @@
                 <ul>
                     @guest
                     <li><a href="{{ route('login') }}">Masuk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('/beranda') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="#">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="#">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="#">Testimoni<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>

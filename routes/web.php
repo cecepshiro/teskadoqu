@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Auth
+
+//Beranda
+Route::get('beranda', 'BerandaController@index');
+
+//Dashboard Admin
+Route::get('admin/dashboard/', 'DashboardController@index');
+
 
 //Kategori
 Route::get('kategori/index/', 'KategoriController@index');
