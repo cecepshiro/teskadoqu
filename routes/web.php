@@ -69,3 +69,6 @@ Route::get('detailtransaksi/detail/{id}', 'DetailTransaksiController@show');
 Route::get('detailtransaksi/edit/{id}', 'DetailTransaksiController@edit');
 Route::post('detailtransaksi/update/{id}', 'DetailTransaksiController@update');
 Route::get('detailtransaksi/destroy/{id}', 'DetailTransaksiController@destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
