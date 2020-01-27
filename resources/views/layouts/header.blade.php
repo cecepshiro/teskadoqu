@@ -20,6 +20,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/OwlCarousel2-2.2.1/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/responsive.css') }}">
+    <!-- //login style -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/checkout_responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/checkout.css') }}"> -->
 </head>
 
 <body>
@@ -104,12 +107,26 @@
             </div>
             <nav class="sidebar_nav">
                 <ul>
-                    <li><a href="index-2.html">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">woman<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">man<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">lookbook<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    @guest
+                    <li><a href="{{ route('login') }}">Masuk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Testimoni<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Kontak<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    @else
+                    <li><a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Keluar<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Testimoni<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="#">Kontak<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    @endif
                 </ul>
             </nav>
 
@@ -270,6 +287,7 @@
     </script>
     <script src="{{ asset('assets/js/custom.js') }}" type="b30993cdc647436bc52d09e3-text/javascript"></script>
 
+    <!-- <script src="{{ asset('assets/js/checkout.js') }}" type="7e17eecf48ed62e014aa2c66-text/javascript"></script> -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
         type="b30993cdc647436bc52d09e3-text/javascript"></script>
     <script type="b30993cdc647436bc52d09e3-text/javascript">
