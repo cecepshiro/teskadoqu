@@ -20,7 +20,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets_dashboard/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    <!-- datatable -->
+    <link href="{{ asset('assets_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -57,12 +58,12 @@
                 Master
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/kategori') }}">
+                <a class="nav-link" href="{{ url('/admin/kategori/index') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Kategori</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/produk') }}">
+                <a class="nav-link" href="{{ url('/admin/produk/index') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Produk</span></a>
             </li>
@@ -74,12 +75,12 @@
                 Pengguna
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/petugas') }}">
+                <a class="nav-link" href="{{ url('/admin/petugas/index') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Admin</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/pembeli') }}">
+                <a class="nav-link" href="{{ url('/admin/pembeli/index') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Pembeli</span></a>
             </li>
@@ -91,7 +92,7 @@
                 Transaksi
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/transaksi') }}">
+                <a class="nav-link" href="{{ url('/admin/transaksi/index') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Transaksi</span></a>
             </li>
@@ -110,9 +111,52 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            @yield('content')
-            <!-- End of Main Content -->
+
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Keluar
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Main Content -->
+                @yield('content')
+                <!-- End of Main Content -->
+
+
+                <!-- /.container-fluid -->
+            </div>
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -160,6 +204,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
+    
     <script src="{{ asset('assets_dashboard/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets_dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -169,12 +214,12 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('assets_dashboard/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('assets_dashboard/vendor/chart.js/Chart.min.js') }}"></script>
+    <!-- datatable -->
+    <script src="{{ asset('assets_dashboard/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets_dashboard/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('assets_dashboard/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('assets_dashboard/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('assets_dashboard/js/demo/datatables-demo.js') }}"></script>
 
 </body>
 

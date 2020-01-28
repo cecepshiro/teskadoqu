@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+     return redirect('/beranda');
 });
 
 //Auth
@@ -34,13 +34,13 @@ Route::post('kategori/update/{id}', 'KategoriController@update');
 Route::get('kategori/destroy/{id}', 'KategoriController@destroy');
 
 //Produk
-Route::get('produk/index/', 'ProdukController@index');
-Route::get('produk/create/', 'ProdukController@create');
-Route::post('produk/store/', 'ProdukController@store');
-Route::get('produk/detail/{id}', 'ProdukController@show');
-Route::get('produk/edit/{id}', 'ProdukController@edit');
-Route::post('produk/update/{id}', 'ProdukController@update');
-Route::get('produk/destroy/{id}', 'ProdukController@destroy');
+Route::get('admin/produk/index/', 'ProdukController@index');
+Route::get('admin/produk/create/', 'ProdukController@create');
+Route::post('admin/produk/store/', 'ProdukController@store');
+Route::get('admin/produk/detail/{id}', 'ProdukController@show');
+Route::get('admin/produk/edit/{id}', 'ProdukController@edit');
+Route::post('admin/produk/update/{id}', 'ProdukController@update');
+Route::get('admin/produk/destroy/{id}', 'ProdukController@destroy');
 
 //Petugas
 Route::get('petugas/index/', 'PetugasController@index');
