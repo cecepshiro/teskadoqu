@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\DetailTransaksi;
 
 class Transaksi extends Model
 {
@@ -13,4 +14,23 @@ class Transaksi extends Model
     protected $fillable = [
       'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','no_hp_penerima','total_harga','status','created_at','updated_at',
     ];
+
+    //Mengambil data transaksi
+    public static function getDetailTransaksi(){
+      return $data = Transaksi::
+      select('*')
+      ->join('pembeli','transaksi.id_pembeli','=','pembeli.id_pembeli')
+      ->join('users','pembeli.user_id','=','users.id')
+      ->get();
+    }
+
+    //Mengambil data detail transaksi
+    public static function getDetailTransaksiById($id){
+      return $data = DetailTransaksi::
+      select('*')
+      ->join('transaksi','detailtransaksi.id_transaksi','=','transaksi.id_transaksi')
+      ->join('produk','detailtransaksi.id_produk','=','produk.id_produk')
+      ->where('detailtransaksi.id_transaksi', $id)
+      ->get();
+    }
 }

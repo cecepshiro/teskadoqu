@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaksi;
+use App\DetailTransaksi;
 
 class TransaksiController extends Controller
 {
@@ -14,8 +15,8 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $data = Transaksi::get();
-        return view('transaksi.list')
+        $data = Transaksi::getDetailTransaksi();
+        return view('admin.transaksi.list')
         ->with('data', $data);
     }
 
@@ -50,10 +51,10 @@ class TransaksiController extends Controller
         $data->total_harga =  $request->total_harga;
         $data->status =  $request->status;
    		if($data->save()){
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['success' => 'Transaksi berhasil ditambahkan']);
         }else{
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['error' => 'Transaksi gagal ditambahkan']);
         }
     }
@@ -66,9 +67,10 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        $data = Transaksi::find($id);
-        return view('transaksi.detail')
-        ->with('data', $data);
+        $data = Transaksi::getDetailTransaksiById($id);
+        return view('admin.transaksi.detail')
+        ->with('data', $data)
+        ->with('kode', $id);
     }
 
     /**
@@ -102,10 +104,10 @@ class TransaksiController extends Controller
         $data->total_harga =  $request->total_harga;
         $data->status =  $request->status;
    		if($data->save()){
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['success' => 'Transaksi berhasil diubah']);
         }else{
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['error' => 'Transaksi gagal diubah']);
         }
     }
@@ -120,10 +122,10 @@ class TransaksiController extends Controller
     {
         $data = Transaksi::find($id)->first();
         if($data->delete()){
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['success' => 'Transaksi berhasil dihapus']);
         }else{
-            return redirect('/transaksi/index')
+            return redirect('admin/transaksi/index')
             ->with(['error' => 'Transaksi gagal dihapus']);
         }
     }
