@@ -25,13 +25,13 @@ Route::get('admin/dashboard/', 'DashboardController@index');
 
 
 //Kategori
-Route::get('kategori/index/', 'KategoriController@index');
-Route::get('kategori/create/', 'KategoriController@create');
-Route::post('kategori/store/', 'KategoriController@store');
-Route::get('kategori/detail/{id}', 'KategoriController@show');
-Route::get('kategori/edit/{id}', 'KategoriController@edit');
-Route::post('kategori/update/{id}', 'KategoriController@update');
-Route::get('kategori/destroy/{id}', 'KategoriController@destroy');
+Route::get('admin/kategori/index/', 'KategoriController@index');
+Route::get('admin/kategori/create/', 'KategoriController@create');
+Route::post('admin/kategori/store/', 'KategoriController@store');
+Route::get('admin/kategori/detail/{id}', 'KategoriController@show');
+Route::get('admin/kategori/edit/{id}', 'KategoriController@edit');
+Route::post('admin/kategori/update/{id}', 'KategoriController@update');
+Route::get('admin/kategori/destroy/{id}', 'KategoriController@destroy');
 
 //Produk
 Route::get('admin/produk/index/', 'ProdukController@index');
@@ -43,22 +43,22 @@ Route::post('admin/produk/update/{id}', 'ProdukController@update');
 Route::get('admin/produk/destroy/{id}', 'ProdukController@destroy');
 
 //Petugas
-Route::get('petugas/index/', 'PetugasController@index');
-Route::get('petugas/create/', 'PetugasController@create');
-Route::post('petugas/store/', 'PetugasController@store');
-Route::get('petugas/detail/{id}', 'PetugasController@show');
-Route::get('petugas/edit/{id}', 'PetugasController@edit');
-Route::post('petugas/update/{id}', 'PetugasController@update');
-Route::get('petugas/destroy/{id}', 'PetugasController@destroy');
+Route::get('admin/petugas/index/', 'PetugasController@index');
+Route::get('admin/petugas/create/', 'PetugasController@create');
+Route::post('admin/petugas/store/', 'PetugasController@store');
+Route::get('admin/petugas/detail/{id}', 'PetugasController@show');
+Route::get('admin/petugas/edit/{id}', 'PetugasController@edit');
+Route::post('admin/petugas/update/{id}', 'PetugasController@update');
+Route::get('admin/petugas/destroy/{id}', 'PetugasController@destroy');
 
 //Pembeli
-Route::get('pembeli/index/', 'PembeliController@index');
-Route::get('pembeli/create/', 'PembeliController@create');
-Route::post('pembeli/store/', 'PembeliController@store');
-Route::get('pembeli/detail/{id}', 'PembeliController@show');
-Route::get('pembeli/edit/{id}', 'PembeliController@edit');
-Route::post('pembeli/update/{id}', 'PembeliController@update');
-Route::get('pembeli/destroy/{id}', 'PembeliController@destroy');
+Route::get('admin/pembeli/index/', 'PembeliController@index');
+Route::get('admin/pembeli/create/', 'PembeliController@create');
+Route::post('admin/pembeli/store/', 'PembeliController@store');
+Route::get('admin/pembeli/detail/{id}', 'PembeliController@show');
+Route::get('admin/pembeli/edit/{id}', 'PembeliController@edit');
+Route::post('admin/pembeli/update/{id}', 'PembeliController@update');
+Route::get('admin/pembeli/destroy/{id}', 'PembeliController@destroy');
 
 //Transaksi
 Route::get('transaksi/index/', 'TransaksiController@index');

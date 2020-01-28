@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pembeli;
+use App\User;
 
 class PembeliController extends Controller
 {
@@ -14,8 +15,8 @@ class PembeliController extends Controller
      */
     public function index()
     {
-        $data = Pembeli::get();
-        return view('pembeli.list')
+        $data = Pembeli::getDetailPembeli();
+        return view('admin.pembeli.list')
         ->with('data', $data);
     }
 
@@ -26,7 +27,7 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        return view('pembeli.form_tambah');
+        return view('admin.pembeli.form_tambah');
     }
 
     /**
@@ -46,10 +47,10 @@ class PembeliController extends Controller
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
    		if($data->save()){
-            return redirect('/pembeli/index')
+            return redirect('admin/pembeli/index')
             ->with(['success' => 'Pembeli berhasil ditambahkan']);
         }else{
-            return redirect('/pembeli/index')
+            return redirect('admin/pembeli/index')
             ->with(['error' => 'Pembeli gagal ditambahkan']);
         }
     }
@@ -62,9 +63,10 @@ class PembeliController extends Controller
      */
     public function show($id)
     {
-        $data = Pembeli::find($id);
-        return view('pembeli.detail')
+        $data = Pembeli::getDetailPembeliById($id);
+        return view('admin.pembeli.detail')
         ->with('data', $data);
+        // print_r($data);
     }
 
     /**
@@ -76,7 +78,7 @@ class PembeliController extends Controller
     public function edit($id)
     {
         $data = Pembeli::find($id);
-        return view('pembeli.form_ubah')
+        return view('admin.pembeli.form_ubah')
         ->with('data', $data);
     }
 
@@ -96,10 +98,10 @@ class PembeliController extends Controller
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
    		if($data->save()){
-            return redirect('/pembeli/index')
+            return redirect('admin/pembeli/index')
             ->with(['success' => 'Pembeli berhasil diubah']);
         }else{
-            return redirect('/pembeli/index')
+            return redirect('admin/pembeli/index')
             ->with(['error' => 'Pembeli gagal diubah']);
         }
     }
@@ -112,12 +114,16 @@ class PembeliController extends Controller
      */
     public function destroy($id)
     {
-        $data = Pembeli::find($id)->first();
+        $data = Pembeli::find($id);
+        $tmp_id = $data['user_id'];
         if($data->delete()){
-            return redirect('/pembeli/index')
+            $data2 = User::find($tmp_id);
+            $data2->delete();
+            return redirect('admin/pembeli/index')
             ->with(['success' => 'Pembeli berhasil dihapus']);
+            // print_r($tmp_id);
         }else{
-            return redirect('/pembeli/index')
+            return redirect('admin/pembeli/index')
             ->with(['error' => 'Pembeli gagal dihapus']);
         }
     }

@@ -15,7 +15,7 @@ class KategoriController extends Controller
     public function index()
     {
         $data = Kategori::get();
-        return view('kategori.list')
+        return view('admin.kategori.list')
         ->with('data', $data);
     }
 
@@ -26,7 +26,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view('kategori.form_tambah');
+        return view('admin.kategori.form_tambah');
     }
 
     /**
@@ -38,10 +38,10 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $data = new Kategori;
-        $data->id_kategori = $request->id_kategori;
         $data->nama_kategori =  $request->nama_kategori;
+        // $data->parent =  $request->parent;
    		if($data->save()){
-            return redirect('/kategori/index')
+            return redirect('admin/kategori/index')
             ->with(['success' => 'Kategori berhasil ditambahkan']);
         }else{
             return redirect('/kategori/index')
@@ -58,7 +58,7 @@ class KategoriController extends Controller
     public function show($id)
     {
         $data = Kategori::find($id);
-        return view('kategori.detail')
+        return view('admin.kategori.detail')
         ->with('data', $data);
     }
 
@@ -71,7 +71,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $data = Kategori::find($id);
-        return view('kategori.form_ubah')
+        return view('admin.kategori.form_ubah')
         ->with('data', $data);
     }
 
@@ -86,11 +86,12 @@ class KategoriController extends Controller
     {
         $data = Kategori::where('id_kategori', $id)->first();
         $data->nama_kategori =  $request->nama_kategori;
+        // $data->parent =  $request->parent;
    		if($data->save()){
-            return redirect('/kategori/index')
+            return redirect('admin/kategori/index')
             ->with(['success' => 'Kategori berhasil diubah']);
         }else{
-            return redirect('/kategori/index')
+            return redirect('admin/kategori/index')
             ->with(['error' => 'Kategori gagal diubah']);
         }
     }
@@ -103,12 +104,12 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        $data = Kategori::find($id)->first();
+        $data = Kategori::find($id);
         if($data->delete()){
-            return redirect('/kategori/index')
+            return redirect('admin/kategori/index')
             ->with(['success' => 'Kategori berhasil dihapus']);
         }else{
-            return redirect('/kategori/index')
+            return redirect('admin/kategori/index')
             ->with(['error' => 'Kategori gagal dihapus']);
         }
     }

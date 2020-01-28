@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Petugas;
+use App\User;
+use Auth;
 
 class PetugasController extends Controller
 {
@@ -14,8 +16,8 @@ class PetugasController extends Controller
      */
     public function index()
     {
-        $data = Petugas::get();
-        return view('petugas.list')
+        $data = User::orWhere('level',0)->orWhere('level',1)->orWhere('level',2)->get()->except(Auth::user()->id);
+        return view('admin.petugas.list')
         ->with('data', $data);
     }
 
@@ -26,7 +28,7 @@ class PetugasController extends Controller
      */
     public function create()
     {
-        return view('petugas.form_tambah');
+        return view('admin.petugas.form_tambah');
     }
 
     /**
@@ -37,21 +39,23 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Petugas;
-        $data->id_petugas = $request->id_petugas;
-        $data->user_id = $request->user_id;
-        $data->tempat_lahir =  $request->tempat_lahir;
-        $data->tgl_lahir = $request->tgl_lahir;
-        $data->jk = $request->jk;
-        $data->no_hp = $request->no_hp;
-        $data->alamat = $request->alamat;
-   		if($data->save()){
-            return redirect('/petugas/index')
-            ->with(['success' => 'Petugas berhasil ditambahkan']);
-        }else{
-            return redirect('/petugas/index')
-            ->with(['error' => 'Petugas gagal ditambahkan']);
-        }
+        // validate request data
+        $this->validate($request, [
+            'name' => 'required|string|max:50',
+            'email' => 'required|email|max:100|unique:users',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password'
+        ]);
+        // save into table
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'level' => $request->level
+        ]);
+        // redirect to home
+        return redirect('admin/petugas/index')
+        ->with(['success' => 'Petugas berhasil disimpan']);
     }
 
     /**
@@ -63,7 +67,7 @@ class PetugasController extends Controller
     public function show($id)
     {
         $data = Petugas::find($id);
-        return view('petugas.detail')
+        return view('admin.petugas.detail')
         ->with('data', $data);
     }
 
@@ -75,8 +79,8 @@ class PetugasController extends Controller
      */
     public function edit($id)
     {
-        $data = Petugas::find($id);
-        return view('petugas.form_ubah')
+        $data = User::find($id);
+        return view('admin.petugas.form_ubah')
         ->with('data', $data);
     }
 
@@ -89,18 +93,14 @@ class PetugasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Petugas::where('id_petugas', $id)->first();
-        $data->tempat_lahir =  $request->tempat_lahir;
-        $data->tgl_lahir = $request->tgl_lahir;
-        $data->jk = $request->jk;
-        $data->no_hp = $request->no_hp;
-        $data->alamat = $request->alamat;
+        $data = User::where('id', $id)->first();
+        $data->level =  $request->level;
    		if($data->save()){
-            return redirect('/petugas/index')
-            ->with(['success' => 'Petugas berhasil diubah']);
+            return redirect('admin/petugas/index')
+            ->with(['success' => 'Level petugas berhasil diubah']);
         }else{
-            return redirect('/petugas/index')
-            ->with(['error' => 'Petugas gagal diubah']);
+            return redirect('admin/petugas/index')
+            ->with(['error' => 'Level petugas gagal diubah']);
         }
     }
 
@@ -112,12 +112,12 @@ class PetugasController extends Controller
      */
     public function destroy($id)
     {
-        $data = Petugas::find($id)->first();
+        $data = User::find($id);
         if($data->delete()){
-            return redirect('/petugas/index')
+            return redirect('admin/petugas/index')
             ->with(['success' => 'Petugas berhasil dihapus']);
         }else{
-            return redirect('/petugas/index')
+            return redirect('admin/petugas/index')
             ->with(['error' => 'Petugas gagal dihapus']);
         }
     }
