@@ -70,48 +70,4 @@
         </div>
     </div>
 </div>
-
-<div class="categories">
-    <div class="section_container">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="categories_list_container">
-                        <ul class="categories_list d-flex flex-row align-items-center justify-content-start">
-                            <li><a href="#">Semua Produk</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="products">
-    <div class="section_container">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="products_container grid">
-                    @foreach($produk as $row)
-                        <div class="product grid-item hot">
-                            <div class="product_inner">
-                                <div class="product_image">
-                                    <img src="{{ asset('assets/images/product_1.jpg') }}" alt="">
-                                    <div class="product_tag">{{ $row->stok }}</div>
-                                </div>
-                                <div class="product_content text-center">
-                                    <div class="product_title"><a href="{{ url('beranda/produk/'. $row->id_produk) }}">{{ $row->nama_produk }}</a></div>
-                                    <div class="product_price">{{ $row->harga }}</div>
-                                    <div class="product_button ml-auto mr-auto trans_200"><a href="#">Tambah</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

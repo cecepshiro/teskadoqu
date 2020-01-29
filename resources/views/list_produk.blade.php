@@ -54,39 +54,6 @@
     </div>
 </div>
 
-<div class="boxes">
-    <div class="section_container">
-        <div class="container">
-            <div class="row">
-                @foreach($kategori as $row)
-                    <div class="col-lg-4 box_col space_kategori">
-                        <div class="box">
-                            <div class="box_image"><img src="{{ asset('assets/images/box_1.jpg') }}" alt=""></div>
-                            <div class="box_title trans_200"><a href="{{ url('beranda/kategori/'.$row->id_kategori ) }}">{{ $row->nama_kategori }}</a></div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="categories">
-    <div class="section_container">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="categories_list_container">
-                        <ul class="categories_list d-flex flex-row align-items-center justify-content-start">
-                            <li><a href="#">Semua Produk</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="products">
     <div class="section_container">
         <div class="container">

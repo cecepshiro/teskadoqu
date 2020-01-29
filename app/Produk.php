@@ -21,4 +21,13 @@ class Produk extends Model
       ->join('kategori','produk.id_kategori','=','kategori.id_kategori')
       ->get();
     }
+
+    //Mengambil data hasil pencarian produk
+    public static function searchProduct($data){
+      return $data = Produk::
+      select('*')
+      ->join('kategori','produk.id_kategori','=','kategori.id_kategori')
+      ->orWhere('produk.nama_produk','LIKE','%'.$data.'%')
+      ->simplePaginate(9);
+    }
 }

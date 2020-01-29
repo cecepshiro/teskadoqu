@@ -110,19 +110,15 @@
                     @guest
                     <li><a href="{{ route('login') }}">Masuk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('/beranda') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Testimoni<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Kontak<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('beranda/kategori') }}">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('beranda/produk') }}">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     @else
                     <li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Keluar<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Testimoni<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                    <li><a href="#">Kontak<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('beranda/kategori') }}">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('beranda/produk') }}">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -131,9 +127,10 @@
             </nav>
 
             <div class="search">
-                <form action="#" class="search_form" id="sidebar_search_form">
-                    <input type="text" class="search_input" placeholder="Search" required="required">
-                    <button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <form action="post" action="{{ url('beranda/search') }}" class="search_form" id="sidebar_search_form">
+                
+                    <input type="text" class="search_input" placeholder="Cari.." name="cari" required="required">
+                    <button type="submit" class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
             </div>
 

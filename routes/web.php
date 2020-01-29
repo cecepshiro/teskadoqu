@@ -19,6 +19,12 @@ Route::get('/', function () {
 
 //Beranda
 Route::get('beranda', 'BerandaController@index');
+Route::get('beranda/kategori/{id}', 'BerandaController@detail_kategori');
+Route::get('beranda/kategori', 'BerandaController@all_kategori');
+Route::get('beranda/produk/{id}', 'BerandaController@detail_produk');
+Route::get('beranda/produk', 'BerandaController@all_produk');
+Route::get('beranda/search', 'BerandaController@search_produk');
+
 
 //Dashboard Admin
 Route::get('admin/dashboard/', 'DashboardController@index');
