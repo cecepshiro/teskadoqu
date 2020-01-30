@@ -69,11 +69,17 @@ Route::get('admin/pembeli/destroy/{id}', 'PembeliController@destroy');
 //Transaksi
 Route::get('admin/transaksi/index/', 'TransaksiController@index');
 Route::get('admin/transaksi/create/', 'TransaksiController@create');
-Route::post('admin/transaksi/store/', 'TransaksiController@store');
+Route::post('beranda/transaksi/store/', 'TransaksiController@store');
 Route::get('admin/transaksi/detail/{id}', 'TransaksiController@show');
 Route::get('admin/transaksi/edit/{id}', 'TransaksiController@edit');
-Route::post('admin/transaksi/update/{id}', 'TransaksiController@update');
+Route::post('beranda/transaksi/update/{id}', 'TransaksiController@update');
 Route::get('admin/transaksi/destroy/{id}', 'TransaksiController@destroy');
+Route::get('beranda/transaksi/qty/', 'TransaksiController@getQty');
+Route::get('beranda/transaksi/checkout/', 'TransaksiController@checkout');
+Route::get('beranda/transaksi/detailcheckout/{id}', 'TransaksiController@detailcheckout');
+Route::get('beranda/transaksi/payment/{id}', 'TransaksiController@payment');
+Route::post('beranda/transaksi/alamat/{id}', 'TransaksiController@alamat');
+Route::get('beranda/transaksi/list', 'TransaksiController@list_transaksi');
 
 //Detail Transaksi
 Route::get('detailtransaksi/index/', 'DetailTransaksiController@index');
@@ -85,4 +91,9 @@ Route::post('detailtransaksi/update/{id}', 'DetailTransaksiController@update');
 Route::get('detailtransaksi/destroy/{id}', 'DetailTransaksiController@destroy');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+//Daerah
+Route::get('beranda/daerah/provinsi', 'DaerahController@selectProvinsi');
+Route::get('beranda/daerah/kabupaten/{id}', 'DaerahController@selectKabupaten');
+Route::get('beranda/daerah/kecamatan/{id}', 'DaerahController@selectKecamatan');

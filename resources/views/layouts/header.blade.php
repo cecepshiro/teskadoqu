@@ -119,6 +119,7 @@
                     <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('beranda/kategori') }}">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('beranda/produk') }}">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="{{ url('beranda/transaksi/list') }}">Daftar Transaksi<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -139,8 +140,7 @@
                         <img src="{{ asset('assets/images/bag.png') }}" alt="">
                         <div class="cart_num">2</div>
                     </a></div>
-                <div class="cart_text">Cart</div>
-                <div class="cart_price">$39.99 (1)</div>
+                <a href="{{ url('beranda/transaksi/checkout') }}"><div class="cart_text">Keranjang</div></a>
             </div>
         </div>
 

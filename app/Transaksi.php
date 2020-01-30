@@ -12,7 +12,7 @@ class Transaksi extends Model
     public $incrementing =false;
     public $timestamps=true; 
     protected $fillable = [
-      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','no_hp_penerima','total_harga','status','created_at','updated_at',
+      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','telp_penerima','total_harga','status','created_at','updated_at',
     ];
 
     //Mengambil data transaksi
@@ -31,6 +31,18 @@ class Transaksi extends Model
       ->join('transaksi','detailtransaksi.id_transaksi','=','transaksi.id_transaksi')
       ->join('produk','detailtransaksi.id_produk','=','produk.id_produk')
       ->where('detailtransaksi.id_transaksi', $id)
+      ->get();
+    }
+
+    //Mengambil data detail transaksi
+    public static function getTransaksiOrder($id){
+      return $data = Transaksi::
+      select('*','transaksi.created_at as tgl_transaksi','transaksi.alamat as alamat_pengiriman')
+      ->join('detailtransaksi','transaksi.id_transaksi','=','detailtransaksi.id_transaksi')
+      ->join('produk','detailtransaksi.id_produk','=','produk.id_produk')
+      ->join('pembeli','transaksi.id_pembeli','=','pembeli.id_pembeli')
+      ->join('users','pembeli.user_id','=','users.id')
+      ->where('transaksi.id_pembeli', $id)
       ->get();
     }
 }
