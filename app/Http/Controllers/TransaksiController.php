@@ -9,6 +9,8 @@ use Auth;
 use App\Pembeli;
 use App\Produk;
 use App\ProvinsiModel;
+use App\KabupatenModel;
+use App\KecamatanModel;
 
 class TransaksiController extends Controller
 {
@@ -177,24 +179,31 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $data = Transaksi::where('id_transaksi', $id)->first();
+        $prov = ProvinsiModel::select('nama_provinsi')->where('id', $request->provinsi)->value('nama_provinsi');
+        $kab = KabupatenModel::select('nama_kabupaten')->where('id', intval($request->kabupaten))->value('nama_kabupaten');
+        $kec = KecamatanModel::select('nama_kecamatan')->where('id', intval($request->kecamatan))->value('nama_kecamatan');
+        //random key
+        $digits = 3;
+        $hasil = rand(pow(10, $digits-1), pow(10, $digits)-1);
+        //  //update
+        $data = Transaksi::where('id_transaksi', $request->id_transaksi)->first();
         $data->penerima =  $request->penerima;
-        $data->provinsi =  $request->provinsi;
-        $data->kabupaten =  $request->kabupaten;
-        $data->kecamatan =  $request->kecamatan;
+        $data->provinsi = $prov; 
+        $data->kabupaten =  $kab;
+        $data->kecamatan =  $kec;
         $data->alamat =  $request->alamat;
         $data->kode_pos =  $request->kode_pos;
         $data->telp_penerima =  $request->telp_penerima;
+        $data->id_tf =  $hasil;
    		if($data->save()){
-            
-            // return redirect('beranda/transaksi/index')
-            // ->with(['success' => 'Transaksi berhasil diubah']);
+            return $data;
         }else{
-            // return redirect('beranda/transaksi/index')
-            // ->with(['error' => 'Transaksi gagal diubah']);
+            return 'error';
         }
+
+        // return $request->alamat;
     }
 
     /**

@@ -78,6 +78,12 @@
                                         <input type="phone" id="telp_penerima" name="telp_penerima"
                                             class="checkout_input" required="required">
                                     </div>
+                                    <input type="hidden" id="tmp_kab" name="tmp_kab">
+                                    <input type="hidden" id="tmp_kec" name="tmp_kec">
+                                    <input type="hidden" id="tmp_penerima" name="tmp_penerima">
+                                    <input type="hidden" id="tmp_alamat" name="tmp_alamat">
+                                    <input type="hidden" id="tmp_pos" name="tmp_pos">
+                                    <input type="hidden" id="tmp_telp" name="tmp_telp">
                                 </form>
                             </div>
                         </div>
@@ -106,16 +112,8 @@
 
                                 <div class="payment">
                                     <div class="payment_options">
-                                        <label class="payment_option clearfix">BCA
-                                            <input type="radio" name="bca">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="payment_option clearfix">BNI
-                                            <input type="radio" name="bni">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="payment_option clearfix">BRI
-                                            <input type="radio" name="bri">
+                                        <label class="payment_option clearfix">Transfer Bank
+                                            <input type="radio" name="radio" checked readonly>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -124,7 +122,8 @@
                                 <div class="order_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
                                     pharetra temp or so dales. Phasellus sagittis auctor gravida. Integ er bibendum
                                     sodales arcu id te mpus. Ut consectetur lacus.</div>
-                                <div class="checkout_button trans_200 simpan" data-idtransaksi="{{ $kode }}"><a href="#">Konfirmasi Order</a></div>
+                                <div class="checkout_button trans_200 simpan" data-idtransaksi="{{ $kode }}"><a
+                                        href="#">Konfirmasi Order</a></div>
                             </div>
                         </div>
                     </div>
@@ -177,42 +176,55 @@
 <script>
     $(".simpan").on("click", function () {
         var kode = $(this).attr("data-idtransaksi");
+        var kab = document.getElementById('tmp_kab').value;
+        var kec = document.getElementById('tmp_kec').value;
+        var pene = document.getElementById('tmp_penerima').value;
+        var alam = document.getElementById('tmp_alamat').value;
+        var pos = document.getElementById('tmp_pos').value;
+        var telp = document.getElementById('tmp_telp').value;
         axios.post('/beranda/transaksi/update', {
-                id_transaksi: kode,
-                penerima: penerima,
-                provinsi: provinsi,
-                kabupaten: kabupaten,
-                kecamatan: kecamatan,
-                alamat: alamat,
-                kode_post: kode_post,
-                telp_penerima: telp_penerima,
+            id_transaksi: kode,
+            penerima: pene,
+            provinsi: provinsi,
+            kabupaten: kab,
+            kecamatan: kec,
+            alamat: alam,
+            kode_pos: pos,
+            telp_penerima: telp,
         }).then((response) => {
             console.log(response);
         }, (error) => {
             console.log(error);
-        });      
+        });
+        // alert(kab);   
     });
 
     $("#penerima").keyup(function () {
         var penerima = $(this).val();
+        document.getElementById('tmp_penerima').value = penerima;
     });
     $("#alamat").keyup(function () {
         var alamat = $(this).val();
+        document.getElementById('tmp_alamat').value = alamat;
     });
     $("#kode_pos").keyup(function () {
         var kode_pos = $(this).val();
+        document.getElementById('tmp_pos').value = kode_pos;
     });
     $("#telp_penerima").keyup(function () {
         var telp_penerima = $(this).val();
+        document.getElementById('tmp_telp').value = telp_penerima;
     });
     $("#provinsi").change(function () {
         provinsi = $(this).val();
     });
     $("#kabupaten").change(function () {
         var kabupaten = $(this).val();
+        document.getElementById('tmp_kab').value = kabupaten;
     });
     $("#kecamatan").change(function () {
         var kecamatan = $(this).val();
+        document.getElementById('tmp_kec').value = kecamatan;
     });
 
 </script>

@@ -12,7 +12,7 @@ class Transaksi extends Model
     public $incrementing =false;
     public $timestamps=true; 
     protected $fillable = [
-      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','telp_penerima','total_harga','biaya_ekspedisi','status','created_at','updated_at',
+      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','telp_penerima','total_harga','biaya_ekspedisi','id_tf','status','created_at','updated_at',
     ];
 
     //Mengambil data transaksi

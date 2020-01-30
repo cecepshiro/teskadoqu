@@ -72,7 +72,7 @@ Route::get('admin/transaksi/create/', 'TransaksiController@create');
 Route::post('beranda/transaksi/store/', 'TransaksiController@store');
 Route::get('admin/transaksi/detail/{id}', 'TransaksiController@show');
 Route::get('admin/transaksi/edit/{id}', 'TransaksiController@edit');
-Route::post('beranda/transaksi/update/{id}', 'TransaksiController@update');
+Route::post('beranda/transaksi/update', 'TransaksiController@update');
 Route::get('beranda/transaksi/destroy/{id}', 'TransaksiController@destroy');
 Route::get('beranda/transaksi/qty/', 'TransaksiController@getQty');
 Route::get('beranda/transaksi/checkout/', 'TransaksiController@checkout');
