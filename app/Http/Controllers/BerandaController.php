@@ -28,7 +28,7 @@ class BerandaController extends Controller
     {
         $produk = Produk::where('id_kategori', $id)->get();
         $kategori = Kategori::get();
-        return view('detail_kategori')
+        return view('list_produk')
         ->with('produk', $produk)
         ->with('kategori', $kategori);
     }

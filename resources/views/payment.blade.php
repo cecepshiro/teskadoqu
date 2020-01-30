@@ -103,9 +103,14 @@
                                             {{ number_format($data['biaya_ekspedisi'], 0, '', '.') }}</div>
                                     </li>
                                     <li class="d-flex flex-row align-items-center justify-content-start">
+                                        <div class="cart_extra_total_title">Transfer Bank</div>
+                                        <div class="cart_extra_total_value ml-auto">- Rp.
+                                            {{ number_format($key_tf, 0, '', '.') }}</div>
+                                    </li>
+                                    <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_extra_total_title">Total</div>
                                         <div class="cart_extra_total_value ml-auto">Rp.
-                                            {{ number_format(($data['total_harga'] + $data['biaya_ekspedisi']), 0, '', '.') }}
+                                            {{ number_format(((($data['total_harga'] + $data['biaya_ekspedisi']) - $key_tf)), 0, '', '.') }}
                                         </div>
                                     </li>
                                 </ul>
@@ -122,7 +127,7 @@
                                 <div class="order_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
                                     pharetra temp or so dales. Phasellus sagittis auctor gravida. Integ er bibendum
                                     sodales arcu id te mpus. Ut consectetur lacus.</div>
-                                <div class="checkout_button trans_200 simpan" data-idtransaksi="{{ $kode }}"><a
+                                <div class="checkout_button trans_200 simpan" data-idtf="{{ $key_tf }}" data-idtransaksi="{{ $kode }}"><a
                                         href="#">Konfirmasi Order</a></div>
                             </div>
                         </div>
@@ -182,6 +187,7 @@
         var alam = document.getElementById('tmp_alamat').value;
         var pos = document.getElementById('tmp_pos').value;
         var telp = document.getElementById('tmp_telp').value;
+        var id_tf = $(this).attr("data-idtf");
         axios.post('/beranda/transaksi/update', {
             id_transaksi: kode,
             penerima: pene,
@@ -191,10 +197,12 @@
             alamat: alam,
             kode_pos: pos,
             telp_penerima: telp,
+            id_tf: id_tf,
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
+            window.location.href = "/beranda/transaksi/list";
         }, (error) => {
-            console.log(error);
+            // console.log(error);
         });
         // alert(kab);   
     });

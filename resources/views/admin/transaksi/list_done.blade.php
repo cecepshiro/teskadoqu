@@ -90,6 +90,8 @@
                                     paid
                                 @elseif($row->status == 3)
                                     shipped
+                                @elseif($row->status == 4)
+                                    done
                                 @endif
                             </td>
                             <td>{{ $row->created_at }}</td>

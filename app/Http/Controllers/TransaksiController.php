@@ -196,7 +196,8 @@ class TransaksiController extends Controller
         $data->alamat =  $request->alamat;
         $data->kode_pos =  $request->kode_pos;
         $data->telp_penerima =  $request->telp_penerima;
-        $data->id_tf =  $hasil;
+        $data->id_tf =  $request->id_tf;
+        $data->status =  '1';
    		if($data->save()){
             return $data;
         }else{
@@ -258,8 +259,43 @@ class TransaksiController extends Controller
     {
         $id_pembeli = Pembeli::select('id_pembeli')->where('user_id', Auth::user()->id)->value('id_pembeli');
         $data = Transaksi::getTransaksiOrder($id_pembeli);
+        $data2 = Transaksi::getTransaksiOrderPaid($id_pembeli);
+        $data3 = Transaksi::getTransaksiOrderShipped($id_pembeli);
+        $data4 = Transaksi::getTransaksiOrderDone($id_pembeli);
         return view('list_transaksi')
-        ->with('data', $data);
+        ->with('data', $data)
+        ->with('data2', $data2)
+        ->with('data3', $data3)
+         ->with('data4', $data4);
+        // print_r($data3);
+    }
+
+    public function bukti($id)
+    {  
+        return view('form_upload')
+        ->with('kode', $id);
+    }
+
+    public function bukti_simpan(Request $request, $id)
+    {  
+        //Input gambar
+        if($file=$request->file('file')){
+            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
+                $name=sha1($file->getClientOriginalName().time()).".".$file->getClientOriginalExtension();
+                $file->move('bukti',$name);
+                $berkas=$name;
+            }else{
+                return redirect('/beranda/transaksi/list');
+            }
+        }
+        
+        $data = Transaksi::where('id_transaksi', $id)->first();
+        $data->bukti = $berkas;
+        $data->status = '2';
+        if($data->save()){
+            return redirect('/beranda/transaksi/list');
+        }
+        
     }
 
     public function checkout()
@@ -281,6 +317,7 @@ class TransaksiController extends Controller
          ->with('kode', $id_transaksi)
          ->with('result', $result)
          ->with('result_ekspedisi', $result_ekspedisi);
+         
     }
 
     public function detailcheckout($id)
@@ -292,12 +329,17 @@ class TransaksiController extends Controller
 
     public function payment($id)
     {
+        //random key
+        $digits = 3;
+        $key_tf = rand(pow(10, $digits-1), pow(10, $digits)-1);
+        //
         $data = Transaksi::find($id);
         $provinsi = ProvinsiModel::get();
         return view('payment')
         ->with('data', $data)
         ->with('provinsi', $provinsi)
-        ->with('kode', $id);
+        ->with('kode', $id)
+        ->with('key_tf', $key_tf);
     }
 
     public function updatestok(Request $request)
@@ -346,4 +388,60 @@ class TransaksiController extends Controller
             return $data;
         }
     }
+
+    public function pending()
+    {
+       $data = Transaksi::pending();
+        return view('admin.transaksi.list_pending')
+        ->with('data', $data);
+    }
+
+    public function paid()
+    {
+       $data = Transaksi::paid();
+        return view('admin.transaksi.list_paid')
+        ->with('data', $data);
+    }
+
+     public function shipped()
+    {
+       $data = Transaksi::shipped();
+        return view('admin.transaksi.list_shipped')
+        ->with('data', $data);
+    }
+
+     public function done()
+    {
+       $data = Transaksi::done();
+        return view('admin.transaksi.list_done')
+        ->with('data', $data);
+    }
+
+     public function kirim($id)
+    {
+    //    $data = Transaksi::shipped();
+        return view('admin.transaksi.input_resi')
+        ->with('kode', $id);
+    }
+
+    public function resi(Request $request, $id)
+    {
+       $data = Transaksi::where('id_transaksi', $id)->first();
+       $data->resi =  $request->resi;
+       $data->status =  '3';
+        if($data->save()){
+            return redirect('/admin/transaksi/paid')
+            ->with(['success' => 'Resi berhasil diinput']);
+        }
+    }
+
+     public function terima($id)
+    {
+       $data = Transaksi::where('id_transaksi', $id)->first();
+       $data->status =  '4';
+        if($data->save()){
+            return redirect('/beranda/transaksi/list');
+        }
+    }
+
 }

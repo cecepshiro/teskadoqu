@@ -55,7 +55,7 @@
                                                 min="1" max="{{ $row->stok }}"></center>
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Subtotal:
-                                        </span>{{ $row->subtotal_detail }}
+                                        </span>Rp. {{ number_format($row->subtotal_detail, 0, '', '.') }}
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Aksi: </span>
                                         <a href="#" class="btn btn-danger hapus" data-toggle="tooltip"

@@ -81,7 +81,16 @@ Route::get('beranda/transaksi/payment/{id}', 'TransaksiController@payment');
 Route::post('beranda/transaksi/alamat/{id}', 'TransaksiController@alamat');
 Route::get('beranda/transaksi/list', 'TransaksiController@list_transaksi');
 Route::post('beranda/transaksi/updatestok', 'TransaksiController@updatestok');
+Route::get('beranda/transaksi/bukti/{id}', 'TransaksiController@bukti');
+Route::post('beranda/transaksi/bukti_simpan/{id}', 'TransaksiController@bukti_simpan');
 Route::post('beranda/transaksi/updateekspedisi', 'TransaksiController@updateekspedisi');
+Route::get('admin/transaksi/paid', 'TransaksiController@paid');
+Route::get('admin/transaksi/pending', 'TransaksiController@pending');
+Route::get('admin/transaksi/shipped', 'TransaksiController@shipped');
+Route::get('admin/transaksi/done', 'TransaksiController@done');
+Route::get('admin/transaksi/kirim/{id}', 'TransaksiController@kirim');
+Route::post('admin/transaksi/resi/{id}', 'TransaksiController@resi');
+Route::get('beranda/transaksi/terima/{id}', 'TransaksiController@terima');
 
 //Detail Transaksi
 Route::get('detailtransaksi/index/', 'DetailTransaksiController@index');

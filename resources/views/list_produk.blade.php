@@ -65,20 +65,54 @@
                             <div class="product_inner">
                                 <div class="product_image">
                                     <img src="{{ asset('assets/images/product_1.jpg') }}" alt="">
-                                    <div class="product_tag">{{ $row->stok }}</div>
+                                    <div class="product_tag" style="width:130px;">Rp. {{ number_format($row->harga, 0, '', '.') }}</div>
                                 </div>
                                 <div class="product_content text-center">
-                                    <div class="product_title"><a href="{{ url('beranda/produk/'. $row->id_produk) }}">{{ $row->nama_produk }}</a></div>
-                                    <div class="product_price">{{ $row->harga }}</div>
-                                    <div class="product_button ml-auto mr-auto trans_200"><a href="#">Tambah</a></div>
+                                    <div class="product_title"><a
+                                            href="{{ url('beranda/produk/'. $row->id_produk) }}">{{ $row->nama_produk }}</a>
+                                    </div>
+                                    <div class="product_price">
+                                        <center><input type="number" style="width:100px;" class="form-control stok" value="1" min="1" max="{{ $row->stok }}"></center>
+                                    </div>
+                                    <div class="product_button ml-auto mr-auto trans_200 tambah"
+                                        data-idproduk="{{ $row->id_produk }}" data-stok="{{ $row->stok }}"
+                                        data-harga="{{ $row->harga }}"><a href="#">Tambah</a></div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var stok = 0;
+    $(".tambah").on("click", function () {
+        var id = $(this).attr("data-idproduk");
+        var harga = $(this).attr("data-harga");
+        if(stok == 0){
+            stok = 1;
+        }else{
+            stok;
+        }
+        axios.post('/beranda/transaksi/store', {
+                id_produk: id,
+                stok: stok,
+                harga: harga,
+        }).then((response) => {
+            // console.log(response);
+            alert('Produk berhasil ditambahkan ke keranjang')
+        }, (error) => {
+            // console.log(error);
+        });        
+    });
+    $('.stok').change(function(){
+        stok = $(this).val();
+    })
+
+</script>
 @endsection

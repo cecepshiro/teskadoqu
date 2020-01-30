@@ -51,8 +51,9 @@
             </li>
 
             <!-- Divider -->
+          
+            @if(Auth::user()->level == 1)
             <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
                 Master
@@ -67,6 +68,8 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Produk</span></a>
             </li>
+            @endif
+            @if(Auth::user()->level == 0)
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -96,6 +99,49 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Transaksi</span></a>
             </li>
+            @endif
+
+            @if(Auth::user()->level == 2)
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Data Pesanan
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/transaksi/pending') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Pesanan Pending</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/transaksi/paid') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Pesanan Dibayar</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/transaksi/shipped') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Pesanan Dikirim</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/transaksi/done') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Pesanan Selesai</span></a>
+            </li>
+            <!-- Divider -->
+            <!-- <hr class="sidebar-divider"> -->
+
+            <!-- Heading -->
+            <!-- <div class="sidebar-heading">
+                Transaksi
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/transaksi/index') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Data Transaksi</span></a>
+            </li> -->
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

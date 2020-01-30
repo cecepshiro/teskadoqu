@@ -103,7 +103,7 @@
                             <div class="product_inner">
                                 <div class="product_image">
                                     <img src="{{ asset('assets/images/product_1.jpg') }}" alt="">
-                                    <div class="product_tag">{{ $row->harga }}</div>
+                                    <div class="product_tag" style="width:130px;">Rp. {{ number_format($row->harga, 0, '', '.') }}</div>
                                 </div>
                                 <div class="product_content text-center">
                                     <div class="product_title"><a
