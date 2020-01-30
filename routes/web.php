@@ -80,6 +80,7 @@ Route::get('beranda/transaksi/detailcheckout/{id}', 'TransaksiController@detailc
 Route::get('beranda/transaksi/payment/{id}', 'TransaksiController@payment');
 Route::post('beranda/transaksi/alamat/{id}', 'TransaksiController@alamat');
 Route::get('beranda/transaksi/list', 'TransaksiController@list_transaksi');
+Route::post('beranda/transaksi/updatestok', 'TransaksiController@updatestok');
 
 //Detail Transaksi
 Route::get('detailtransaksi/index/', 'DetailTransaksiController@index');

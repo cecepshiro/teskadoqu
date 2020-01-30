@@ -213,7 +213,8 @@ class TransaksiController extends Controller
     public function checkout()
     {
         $id_pembeli = Pembeli::select('id_pembeli')->where('user_id', Auth::user()->id)->value('id_pembeli');
-        $data = Transaksi::getTransaksiOrder($id_pembeli);
+        $id_transaksi = Transaksi::select('id_transaksi')->where('id_pembeli', $id_pembeli)->where('status', '0')->value('id_transaksi');
+        $data = Transaksi::getDetailTransaksiById($id_transaksi);
         return view('checkout')
         ->with('data', $data);
     }
@@ -233,5 +234,17 @@ class TransaksiController extends Controller
         ->with('data', $data)
         ->with('provinsi', $provinsi)
         ->with('kode', $id);
+    }
+
+    public function updatestok(Request $request)
+    {
+        $data = DetailTransaksi::where('id_detail_transaksi', $request->id_detail_transaksi)->first();
+        $data->qty =  $request->qty;
+        if($data->save()){
+            $data2 = Produk::where('id_produk', $data['id_produk'])->first();
+            $data2->stok = ($data2['stok'] + 1);
+            $data2->save();
+            return $data2;
+        }
     }
 }
