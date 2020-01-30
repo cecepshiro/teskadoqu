@@ -42,16 +42,16 @@
                                     <div class="product_color text-lg-center product_text"><span>Produk: </span>{{ $row->nama_produk }}
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Gambar: </span>
-                                    <div class="product_image"><center><img src="{{ asset('assets/images/cart_1.jpg') }}" alt=""></center></div>
+                                    <div class="product_image"><center><img width="100px" height="100px" src="{{ asset('assets/images/cart_1.jpg') }}" alt=""></center></div>
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Qty: </span>
-                                        <center><input type="number" onclick="qtyUpdate({{ $row->id_detail_transaksi }}, this.value);" style="width:100px;" class="form-control stok" value="{{ $row->qty }}" min="1" max="{{ $row->stok }}"></center>
+                                        <center><input type="number" onclick="qtyUpdate({{ $row->id_detail_transaksi }}, this.value);" style="width:70px;" class="form-control stok" value="{{ $row->qty }}" min="1" max="{{ $row->stok }}"></center>
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Subtotal: </span>{{ $row->total_harga }}
                                     </div>
                                     <div class="product_color text-lg-center product_text"><span>Aksi: </span>
                                         <a href="#" class="btn btn-danger hapus"
-                                        data-toggle="tooltip" title="Hapus Data ini"><i class="fa fa-trash"></i></a>
+                                        data-toggle="tooltip" onclick="produkDelete({{ $row->id_detail_transaksi }},{{ $row->id_transaksi }})"title="Hapus Produk ini"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </li>
                             @endforeach
@@ -63,7 +63,6 @@
                                 class="cart_buttons_inner ml-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
                                 <div class="button button_continue trans_200"><a href="{{ url('/') }}">Lanjutkan
                                         Belanja</a></div>
-                                <div class="button button_clear trans_200"><a href="categories.html">Hapus keranjang</a>
                                 </div>
                             </div>
                         </div>
@@ -135,10 +134,25 @@
                 id_detail_transaksi: strArray[0],
                 qty: strArray[1]
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
         }, (error) => {
-            console.log(error);
+            // console.log(error);
         });
+    }
+    function produkDelete(val1,val2) {
+        var tmp_data = val1+"-"+val2;
+        if(confirm('Yakin ingin membersihkan keranjang anda ?'))
+        {
+            axios.get('/beranda/transaksi/destroy/'+ tmp_data)
+            .then((response) => {
+                alert("Produk berhasil dihapus dari keranjang"); 
+                window.location.reload();
+                // console.log(response);
+            }, (error) => {
+                // console.log(error);
+            }); 
+
+        }
     }
 </script>
 @endsection

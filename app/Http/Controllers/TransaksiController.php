@@ -81,16 +81,35 @@ class TransaksiController extends Controller
             $data->total_harga =  ($tmp_total + $total);
             $data->status =  '0';
             if($data->save()){
-                $data2 = new DetailTransaksi;
-                $data2->id_transaksi = $tmp_id;
-                $data2->id_produk = $request->id_produk;
-                $data2->qty = $request->stok;
-                $data2->subtotal = $total;
-                if($data2->save()){
-                    $data3 = Produk::where('id_produk', $data2->id_produk)->first();
-                    $data3->stok =  ($data3['stok'] - $data2->qty);
-                    $data3->save();
-                    return $data3;
+                //cek jika produk yang dimasukan sama, hanya mengupdate qty nya saja
+                $status = DetailTransaksi::where('id_transaksi', $tmp_id)->where('id_produk', $request->id_produk)->get();
+                $tmp_detail_transaksi = DetailTransaksi::where('id_transaksi', $tmp_id)->where('id_produk', $request->id_produk)->first();
+                if(count($status) > 0){
+                    $data2 = DetailTransaksi::where('id_detail_transaksi', $tmp_detail_transaksi['id_detail_transaksi'])->first();
+                    // $data2->id_transaksi = $tmp_id;
+                    // $data2->id_produk = $request->id_produk;
+                    $data2->qty = $tmp_detail_transaksi['qty'] + $request->stok;
+                    $data2->subtotal = $tmp_detail_transaksi['subtotal'] + $total;
+                    if($data2->save()){
+                        $data3 = Produk::where('id_produk', $data2->id_produk)->first();
+                        $data3->stok =  ($data3['stok'] - $request->stok);
+                        $data3->save();
+                        return $data2;
+                    }
+                }
+                //jika produk tidak sama
+                elseif(count($status) < 1){
+                    $data2 = new DetailTransaksi;
+                    $data2->id_transaksi = $tmp_id;
+                    $data2->id_produk = $request->id_produk;
+                    $data2->qty = $request->stok;
+                    $data2->subtotal = $total;
+                    if($data2->save()){
+                        $data3 = Produk::where('id_produk', $data2->id_produk)->first();
+                        $data3->stok =  ($data3['stok'] - $data2->qty);
+                        $data3->save();
+                        return $data3;
+                    }
                 }
                 
             }else{
@@ -186,13 +205,33 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        $data = Transaksi::find($id)->first();
-        if($data->delete()){
-            return redirect('admin/transaksi/index')
-            ->with(['success' => 'Transaksi berhasil dihapus']);
+        $strArray = explode("-", $id);
+        $id_detail = $strArray[0];
+        $id_trans = $strArray[1];
+        $tmp_old = DetailTransaksi::find($id_detail);
+        //cek jumlah data
+        $count = DetailTransaksi::where('id_transaksi', $id_trans)->get();
+        //update stok produk
+        $data = Produk::where('id_produk', $tmp_old['id_produk'])->first();
+        $data->stok = ($data['stok'] + $tmp_old['qty']);
+        if($data->save()){
+            //kondisi jika produk sisa 1
+            if(count($count) == 1){
+                $data2 = DetailTransaksi::find($id_detail);
+                if($data2->delete()){
+                    $data3 = Transaksi::find($id_trans);
+                    $data3->delete();
+                    return 'success';
+                }
+            //produk > 1
+            }elseif(count($count) > 1){
+                $data2 = DetailTransaksi::find($id_detail);
+                if($data2->delete()){
+                    return 'success';
+                }
+            }
         }else{
-            return redirect('admin/transaksi/index')
-            ->with(['error' => 'Transaksi gagal dihapus']);
+            return 'error';
         }
     }
 
@@ -216,7 +255,8 @@ class TransaksiController extends Controller
         $id_transaksi = Transaksi::select('id_transaksi')->where('id_pembeli', $id_pembeli)->where('status', '0')->value('id_transaksi');
         $data = Transaksi::getDetailTransaksiById($id_transaksi);
         return view('checkout')
-        ->with('data', $data);
+        ->with('data', $data)
+         ->with('kode', $id_transaksi);
     }
 
     public function detailcheckout($id)
@@ -238,13 +278,21 @@ class TransaksiController extends Controller
 
     public function updatestok(Request $request)
     {
+        $status = DetailTransaksi::find($request->id_detail_transaksi);
         $data = DetailTransaksi::where('id_detail_transaksi', $request->id_detail_transaksi)->first();
         $data->qty =  $request->qty;
         if($data->save()){
-            $data2 = Produk::where('id_produk', $data['id_produk'])->first();
-            $data2->stok = ($data2['stok'] + 1);
-            $data2->save();
-            return $data2;
+            if($request->qty <  $status['qty']) {
+                $data2 = Produk::where('id_produk', $data['id_produk'])->first();
+                $data2->stok = ($data2['stok'] - 1);
+                $data2->save();
+                return $data2;
+            }elseif($request->qty > $status['qty']){
+                $data2 = Produk::where('id_produk', $data['id_produk'])->first();
+                $data2->stok = ($data2['stok'] + 1);
+                $data2->save();
+                return $data2;
+            }
         }
     }
 }

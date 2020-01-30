@@ -138,6 +138,7 @@
                 harga: harga,
         }).then((response) => {
             // console.log(response);
+            alert('Produk berhasil ditambahkan ke keranjang')
         }, (error) => {
             // console.log(error);
         });
