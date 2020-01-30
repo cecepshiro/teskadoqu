@@ -132,6 +132,11 @@
     $(".tambah").on("click", function () {
         var id = $(this).attr("data-idproduk");
         var harga = $(this).attr("data-harga");
+        if(stok == 0){
+            stok = 1;
+        }else{
+            stok;
+        }
         axios.post('/beranda/transaksi/store', {
                 id_produk: id,
                 stok: stok,
@@ -141,7 +146,7 @@
             alert('Produk berhasil ditambahkan ke keranjang')
         }, (error) => {
             // console.log(error);
-        });
+        });        
     });
     $('.stok').change(function(){
         stok = $(this).val();

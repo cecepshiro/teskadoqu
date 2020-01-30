@@ -109,7 +109,13 @@
                                         {{ $row->kode_pos }}
                                     @endif
                                 </td>
-                                <td>{{ $row->telp_penerima }}</td>
+                                <td>
+                                    @if($row->telp_penerima == null)
+                                        kosong
+                                    @else
+                                        {{ $row->telp_penerima }}
+                                    @endif
+                                </td>
                                 <td>{{ $row->total_harga }}</td>
                                 <td>
                                     @if($row->status == 0)

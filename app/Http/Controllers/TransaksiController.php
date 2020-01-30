@@ -208,6 +208,7 @@ class TransaksiController extends Controller
         $strArray = explode("-", $id);
         $id_detail = $strArray[0];
         $id_trans = $strArray[1];
+        $status2 = Transaksi::find($id_trans);
         $tmp_old = DetailTransaksi::find($id_detail);
         //cek jumlah data
         $count = DetailTransaksi::where('id_transaksi', $id_trans)->get();
@@ -227,6 +228,9 @@ class TransaksiController extends Controller
             }elseif(count($count) > 1){
                 $data2 = DetailTransaksi::find($id_detail);
                 if($data2->delete()){
+                    $data3 = Transaksi::where('id_transaksi', $id_trans)->first();
+                    $data3->total_harga = ($status2['total_harga'] - $tmp_old['subtotal']);
+                    $data3->save();
                     return 'success';
                 }
             }
@@ -245,18 +249,29 @@ class TransaksiController extends Controller
     {
         $id_pembeli = Pembeli::select('id_pembeli')->where('user_id', Auth::user()->id)->value('id_pembeli');
         $data = Transaksi::getTransaksiOrder($id_pembeli);
-        return view('checkout')
+        return view('list_transaksi')
         ->with('data', $data);
     }
 
     public function checkout()
     {
+        $sum = [];
+        $ekspedisi = [];
         $id_pembeli = Pembeli::select('id_pembeli')->where('user_id', Auth::user()->id)->value('id_pembeli');
         $id_transaksi = Transaksi::select('id_transaksi')->where('id_pembeli', $id_pembeli)->where('status', '0')->value('id_transaksi');
         $data = Transaksi::getDetailTransaksiById($id_transaksi);
+        $all_data = DetailTransaksi::where('id_transaksi', $id_transaksi)->join('produk','detailtransaksi.id_produk','=','produk.id_produk')->get();
+        foreach($all_data as $key => $row){
+            $sum[$key] = $row->subtotal;
+            $ekspedisi[$key] = $row->berat * $row->qty ;
+        }
+        $result = array_sum($sum);
+        $result_ekspedisi = ((array_sum($ekspedisi)) * 5000);
         return view('checkout')
         ->with('data', $data)
-         ->with('kode', $id_transaksi);
+         ->with('kode', $id_transaksi)
+         ->with('result', $result)
+         ->with('result_ekspedisi', $result_ekspedisi);
     }
 
     public function detailcheckout($id)
@@ -279,20 +294,47 @@ class TransaksiController extends Controller
     public function updatestok(Request $request)
     {
         $status = DetailTransaksi::find($request->id_detail_transaksi);
+        $status2 = Transaksi::find($status['id_transaksi']);
         $data = DetailTransaksi::where('id_detail_transaksi', $request->id_detail_transaksi)->first();
         $data->qty =  $request->qty;
         if($data->save()){
             if($request->qty <  $status['qty']) {
                 $data2 = Produk::where('id_produk', $data['id_produk'])->first();
                 $data2->stok = ($data2['stok'] - 1);
-                $data2->save();
+                if($data2->save()){
+                    $data3 = DetailTransaksi::where('id_detail_transaksi', $request->id_detail_transaksi)->first();
+                    $data3->subtotal = ($status['subtotal'] - $data2['harga']);
+                    if($data3->save()){
+                        $data4 = Transaksi::where('id_transaksi', $data3['id_transaksi'])->first();
+                        $data4->total_harga = ($status2['total_harga'] - $data2['harga']);
+                        $data4->save();
+                    }
+                }
                 return $data2;
             }elseif($request->qty > $status['qty']){
                 $data2 = Produk::where('id_produk', $data['id_produk'])->first();
                 $data2->stok = ($data2['stok'] + 1);
-                $data2->save();
-                return $data2;
+                if($data2->save()){
+                    $data3 = DetailTransaksi::where('id_detail_transaksi', $request->id_detail_transaksi)->first();
+                    $data3->subtotal = ($status['subtotal'] + $data2['harga']);
+                    if($data3->save()){
+                        $data4 = Transaksi::where('id_transaksi', $data3['id_transaksi'])->first();
+                        $data4->total_harga = ($status2['total_harga'] - $data2['harga']);
+                        $data4->save();
+                    }
+                }
             }
+        }
+    }
+
+    public function updateekspedisi(Request $request)
+    {
+        $data = Transaksi::where('id_transaksi', $request->id_transaksi)->first();
+        $data->biaya_ekspedisi =  $request->biaya_ekspedisi;
+        if($data->save()){
+            // return view('detail_checkout')
+            // ->with('data', $data);
+            return $data;
         }
     }
 }

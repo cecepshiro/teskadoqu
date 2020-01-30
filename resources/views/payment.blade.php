@@ -26,11 +26,12 @@
                         <div class="billing checkout_box">
                             <div class="checkout_title">Alamat Pengiriman</div>
                             <div class="checkout_form_container">
-                                <form method="POST" action="{{ url('beranda/transaksi/update/'.$kode) }}" enctype="multipart/form-data" class="checkout_form" >
+                                <form method="POST" action="{{ url('beranda/transaksi/update/'.$kode) }}"
+                                    enctype="multipart/form-data" class="checkout_form">
                                     <div>
 
                                         <label for="checkout_company">Nama Penerima</label>
-                                        <input type="text" id="checkout_company" name="penerima" class="checkout_input">
+                                        <input type="text" id="penerima" name="penerima" class="checkout_input">
                                     </div>
                                     <div>
 
@@ -39,7 +40,7 @@
                                             class="checkout_country checkout_input" require="required">
                                             <option value="">Pilih Provinsi</option>
                                             @foreach($provinsi as $row)
-                                                <option value="{{ $row->id}}">{{ $row->nama_provinsi }}</option>
+                                            <option value="{{ $row->id}}">{{ $row->nama_provinsi }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -62,20 +63,20 @@
                                     <div>
 
                                         <label for="checkout_address">Alamat</label>
-                                        <textarea id="checkout_address" name="alamat" class="checkout_input"
+                                        <textarea id="alamat" name="alamat" class="checkout_input"
                                             required="required"></textarea>
                                     </div>
                                     <div>
 
                                         <label for="checkout_zipcode">Kode Pos</label>
-                                        <input type="text" id="checkout_zipcode" name="kode_pos" class="checkout_input"
+                                        <input type="text" id="kode_pos" name="kode_pos" class="checkout_input"
                                             required="required">
                                     </div>
                                     <div>
 
                                         <label for="checkout_phone">No Telepon</label>
-                                        <input type="phone" id="checkout_phone" name="telp_penerima" class="checkout_input"
-                                            required="required">
+                                        <input type="phone" id="telp_penerima" name="telp_penerima"
+                                            class="checkout_input" required="required">
                                     </div>
                                 </form>
                             </div>
@@ -87,15 +88,19 @@
                                 <ul class="cart_extra_total_list">
                                     <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_extra_total_title">Subtotal</div>
-                                        <div class="cart_extra_total_value ml-auto">{{ $data['total_harga'] }}</div>
+                                        <div class="cart_extra_total_value ml-auto">Rp.
+                                            {{ number_format($data['total_harga'], 0, '', '.') }}</div>
                                     </li>
                                     <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_extra_total_title">Pengiriman</div>
-                                        <div class="cart_extra_total_value ml-auto">Free</div>
+                                        <div class="cart_extra_total_value ml-auto">Rp.
+                                            {{ number_format($data['biaya_ekspedisi'], 0, '', '.') }}</div>
                                     </li>
                                     <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_extra_total_title">Total</div>
-                                        <div class="cart_extra_total_value ml-auto">$29.90</div>
+                                        <div class="cart_extra_total_value ml-auto">Rp.
+                                            {{ number_format(($data['total_harga'] + $data['biaya_ekspedisi']), 0, '', '.') }}
+                                        </div>
                                     </li>
                                 </ul>
 
@@ -119,7 +124,7 @@
                                 <div class="order_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
                                     pharetra temp or so dales. Phasellus sagittis auctor gravida. Integ er bibendum
                                     sodales arcu id te mpus. Ut consectetur lacus.</div>
-                                <div class="checkout_button trans_200"><a href="checkout.html">Konfirmasi Order</a></div>
+                                <div class="checkout_button trans_200 simpan" data-idtransaksi="{{ $kode }}"><a href="#">Konfirmasi Order</a></div>
                             </div>
                         </div>
                     </div>
@@ -167,5 +172,48 @@
             });
         });
     });
+
+</script>
+<script>
+    $(".simpan").on("click", function () {
+        var kode = $(this).attr("data-idtransaksi");
+        axios.post('/beranda/transaksi/update', {
+                id_transaksi: kode,
+                penerima: penerima,
+                provinsi: provinsi,
+                kabupaten: kabupaten,
+                kecamatan: kecamatan,
+                alamat: alamat,
+                kode_post: kode_post,
+                telp_penerima: telp_penerima,
+        }).then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });      
+    });
+
+    $("#penerima").keyup(function () {
+        var penerima = $(this).val();
+    });
+    $("#alamat").keyup(function () {
+        var alamat = $(this).val();
+    });
+    $("#kode_pos").keyup(function () {
+        var kode_pos = $(this).val();
+    });
+    $("#telp_penerima").keyup(function () {
+        var telp_penerima = $(this).val();
+    });
+    $("#provinsi").change(function () {
+        provinsi = $(this).val();
+    });
+    $("#kabupaten").change(function () {
+        var kabupaten = $(this).val();
+    });
+    $("#kecamatan").change(function () {
+        var kecamatan = $(this).val();
+    });
+
 </script>
 @endsection

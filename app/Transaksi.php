@@ -12,7 +12,7 @@ class Transaksi extends Model
     public $incrementing =false;
     public $timestamps=true; 
     protected $fillable = [
-      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','telp_penerima','total_harga','status','created_at','updated_at',
+      'id_transaksi','id_pembeli','penerima','provinsi','kabupaten','kecamatan','alamat','kode_pos','telp_penerima','total_harga','biaya_ekspedisi','status','created_at','updated_at',
     ];
 
     //Mengambil data transaksi
@@ -27,7 +27,7 @@ class Transaksi extends Model
     //Mengambil data detail transaksi
     public static function getDetailTransaksiById($id){
       return $data = DetailTransaksi::
-      select('*')
+      select('*','detailtransaksi.subtotal as subtotal_detail')
       ->join('transaksi','detailtransaksi.id_transaksi','=','transaksi.id_transaksi')
       ->join('produk','detailtransaksi.id_produk','=','produk.id_produk')
       ->where('detailtransaksi.id_transaksi', $id)

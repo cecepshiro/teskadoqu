@@ -81,6 +81,7 @@ Route::get('beranda/transaksi/payment/{id}', 'TransaksiController@payment');
 Route::post('beranda/transaksi/alamat/{id}', 'TransaksiController@alamat');
 Route::get('beranda/transaksi/list', 'TransaksiController@list_transaksi');
 Route::post('beranda/transaksi/updatestok', 'TransaksiController@updatestok');
+Route::post('beranda/transaksi/updateekspedisi', 'TransaksiController@updateekspedisi');
 
 //Detail Transaksi
 Route::get('detailtransaksi/index/', 'DetailTransaksiController@index');
