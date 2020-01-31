@@ -69,11 +69,17 @@ class TransaksiController extends Controller
                 $tmp = "0";
                 $tmp_id = $row->id_transaksi;
                 $tmp_total = $row->total_harga;
-            }elseif($row->status == '1'){
-                $tmp = "1";
+            }elseif($row->status == '2'){
+                $tmp = "2";
+            }elseif($row->status == '3'){
+                $tmp = "3";
+            }elseif($row->status == '4'){
+                $tmp = "4";
             }
         }
-        //jika transaksi masih belum dibayar,produk akan terus dimasukan ke id yg sama
+
+        // return $tmp;
+        // //jika transaksi masih belum dibayar,produk akan terus dimasukan ke id yg sama
         if($tmp == "0")
         {
             //Simpan Cart
@@ -120,7 +126,7 @@ class TransaksiController extends Controller
 
         }
         //jika transaksi telah dbayar, maka produk akan masuk ke id yang baru
-        elseif($tmp == "1")
+        elseif($tmp == "2" || $tmp == "3" || $tmp == "4")
         {
             //Simpan Cart
             $data = new Transaksi;
@@ -267,7 +273,7 @@ class TransaksiController extends Controller
         ->with('data2', $data2)
         ->with('data3', $data3)
          ->with('data4', $data4);
-        // print_r($data3);
+        // print_r($data4);
     }
 
     public function bukti($id)
@@ -445,8 +451,8 @@ class TransaksiController extends Controller
     }
 
     public function download($id){
-        $data=Transaksi::where('id_transaksi',$id)->first();
-        $pathToFile='/bukti'.'/'.$data->gambar;
+        $data=Transaksi::find($id);
+        $pathToFile='bukti'.'/'.$data['bukti'];
         return response()->download(public_path($pathToFile));
     }
 

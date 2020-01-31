@@ -95,7 +95,7 @@
                 Transaksi
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/transaksi/index') }}">
+                <a class="nav-link" href="{{ url('/admin/transaksi/done') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Transaksi</span></a>
             </li>

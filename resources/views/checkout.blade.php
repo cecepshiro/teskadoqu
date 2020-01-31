@@ -123,7 +123,13 @@
                                 <div class="cart_extra_total_value ml-auto">Rp. {{ number_format(($result + $result_ekspedisi), 0, '', '.') }}</div>
                             </li>
                         </ul>
+                        <?php
+                           $id_pembeli = DB::table('pembeli')->select('id_pembeli')->where('user_id', Auth::user()->id)->value('id_pembeli'); 
+                            $tmp_stat = DB::table('transaksi')->select('*')->where('id_pembeli', $id_pembeli)->where('status', '0')->get(); 
+                        ?>
+                        @if(count($tmp_stat) > 0)
                         <div class="checkout_button trans_200" onclick="ekspedisiUpdate({{ $result_ekspedisi }}, {{ $kode }})"><a href="{{ url('/beranda/transaksi/payment/'.$kode) }}">Lanjutkan Checkout</a></div>
+                        @endif
                     </div>
                 </div>
             </div>

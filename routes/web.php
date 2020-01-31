@@ -33,11 +33,17 @@ Route::get('admin/dashboard/', 'DashboardController@index');
 //Kategori
 Route::get('admin/kategori/index/', 'KategoriController@index');
 Route::get('admin/kategori/create/', 'KategoriController@create');
+Route::get('admin/kategori/create_sub/', 'KategoriController@create_sub');
 Route::post('admin/kategori/store/', 'KategoriController@store');
+Route::post('admin/kategori/store_sub/', 'KategoriController@store_sub');
 Route::get('admin/kategori/detail/{id}', 'KategoriController@show');
+Route::get('admin/kategori/detail_sub/{id}', 'KategoriController@show_sub');
 Route::get('admin/kategori/edit/{id}', 'KategoriController@edit');
+Route::get('admin/kategori/edit_sub/{id}', 'KategoriController@edit_sub');
 Route::post('admin/kategori/update/{id}', 'KategoriController@update');
+Route::post('admin/kategori/update_sub/{id}', 'KategoriController@update_sub');
 Route::get('admin/kategori/destroy/{id}', 'KategoriController@destroy');
+Route::get('admin/kategori/destroy_sub/{id}', 'KategoriController@destroy_sub');
 
 //Produk
 Route::get('admin/produk/index/', 'ProdukController@index');

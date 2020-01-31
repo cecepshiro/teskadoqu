@@ -82,7 +82,7 @@
                             <td>{{ $row->kecamatan }}</td>
                             <td>{{ $row->alamat }}</td>
                             <td>{{ $row->kode_pos }}</td>
-                            <td>{{ $row->total_harga }}</td>
+                            <td>Rp. {{ number_format($row->total_harga, 0, '', '.') }}</td>
                             <td>
                                 @if($row->status == 1)
                                     pending

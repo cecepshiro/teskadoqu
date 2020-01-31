@@ -38,7 +38,7 @@
                         <br>
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -148,6 +148,266 @@
                                             <a href="{{ url('beranda/transaksi/detailcheckout', $row->id_transaksi) }}"
                                                 class="btn btn-success" data-toggle="tooltip"
                                                 title="Detail Data Transaksi"><i class="fa fa-eye"> Detail</i></a>
+                                            <a href="{{ url('beranda/transaksi/bukti', $row->id_transaksi) }}"
+                                                class="btn btn-warning" data-toggle="tooltip"
+                                                title="Upload Bukti Transaksi"><i class="fa fa-list"> Upload Bukti TF</i></a>
+                                         
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="13">Data Kosong</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                         <br>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Pembeli</th>
+                                        <th>Penerima</th>
+                                        <th>Provinsi.</th>
+                                        <th>Kab.</th>
+                                        <th>Kec.</th>
+                                        <th>Alamat.</th>
+                                        <th>Kode Pos</th>
+                                        <th>Telp. Penerima</th>
+                                        <th>Total Transfer</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Created</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Pembeli</th>
+                                        <th>Penerima</th>
+                                        <th>Provinsi.</th>
+                                        <th>Kab.</th>
+                                        <th>Kec.</th>
+                                        <th>Alamat.</th>
+                                        <th>Kode Pos</th>
+                                        <th>Telp. Penerima</th>
+                                        <th>Total Transfer</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Created</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                            $no = 0;
+                        ?>
+                                    @forelse($data2 as $row)
+                                    <?php
+                            $no++;
+                        ?>
+                                    <tr id="{{ $row->id_transaksi }}">
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $row->name }}</td>
+                                        <td>
+                                            @if($row->penerima == null)
+                                            kosong
+                                            @else
+                                            {{ $row->penerima }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->provinsi == null)
+                                            kosong
+                                            @else
+                                            {{ $row->provinsi }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kabupaten == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kabupaten }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kecamatan == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kecamatan }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->alamat_pengiriman == null)
+                                            kosong
+                                            @else
+                                            {{ $row->alamat_pengiriman }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kode_pos == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kode_pos }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->telp_penerima == null)
+                                            kosong
+                                            @else
+                                            {{ $row->telp_penerima }}
+                                            @endif
+                                        </td>
+                                        <td>Rp. {{ number_format(($row->total_harga - $row->id_tf), 0, '', '.') }}</td>
+                                        <!-- <td>
+                                            @if($row->status == 1)
+                                            pending
+                                            @elseif($row->status == 2)
+                                            paid
+                                            @elseif($row->status == 3)
+                                            shipped
+                                            @endif
+                                        </td> -->
+                                        <td>{{ $row->tgl_transaksi }}</td>
+                                        <td>
+                                            <a href="{{ url('beranda/transaksi/detailcheckout', $row->id_transaksi) }}"
+                                                class="btn btn-success" data-toggle="tooltip"
+                                                title="Detail Data Transaksi"><i class="fa fa-eye"> Detail</i></a>
+                                         
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="13">Data Kosong</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                         <br>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Pembeli</th>
+                                        <th>Penerima</th>
+                                        <th>Provinsi.</th>
+                                        <th>Kab.</th>
+                                        <th>Kec.</th>
+                                        <th>Alamat.</th>
+                                        <th>Kode Pos</th>
+                                        <th>Telp. Penerima</th>
+                                        <th>Total Transfer</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Created</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Pembeli</th>
+                                        <th>Penerima</th>
+                                        <th>Provinsi.</th>
+                                        <th>Kab.</th>
+                                        <th>Kec.</th>
+                                        <th>Alamat.</th>
+                                        <th>Kode Pos</th>
+                                        <th>Telp. Penerima</th>
+                                        <th>Total Transfer</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Created</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                            $no = 0;
+                        ?>
+                                    @forelse($data3 as $row)
+                                    <?php
+                            $no++;
+                        ?>
+                                    <tr id="{{ $row->id_transaksi }}">
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $row->name }}</td>
+                                        <td>
+                                            @if($row->penerima == null)
+                                            kosong
+                                            @else
+                                            {{ $row->penerima }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->provinsi == null)
+                                            kosong
+                                            @else
+                                            {{ $row->provinsi }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kabupaten == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kabupaten }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kecamatan == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kecamatan }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->alamat_pengiriman == null)
+                                            kosong
+                                            @else
+                                            {{ $row->alamat_pengiriman }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->kode_pos == null)
+                                            kosong
+                                            @else
+                                            {{ $row->kode_pos }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($row->telp_penerima == null)
+                                            kosong
+                                            @else
+                                            {{ $row->telp_penerima }}
+                                            @endif
+                                        </td>
+                                        <td>Rp. {{ number_format(($row->total_harga - $row->id_tf), 0, '', '.') }}</td>
+                                        <!-- <td>
+                                            @if($row->status == 1)
+                                            pending
+                                            @elseif($row->status == 2)
+                                            paid
+                                            @elseif($row->status == 3)
+                                            shipped
+                                            @endif
+                                        </td> -->
+                                        <td>{{ $row->tgl_transaksi }}</td>
+                                        <td>
+                                            <a href="{{ url('beranda/transaksi/detailcheckout', $row->id_transaksi) }}"
+                                                class="btn btn-success" data-toggle="tooltip"
+                                                title="Detail Data Transaksi"><i class="fa fa-eye"> Detail</i></a>
+                                            <a href="{{ url('beranda/transaksi/terima', $row->id_transaksi) }}"
+                                                class="btn btn-primary" data-toggle="tooltip"
+                                                title="Terima Paket"><i class="fa fa-list"> Terima</i></a>
                                          
                                         </td>
                                     </tr>
@@ -165,7 +425,7 @@
                         <br>
                         <br>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
