@@ -42,7 +42,7 @@ class ProdukController extends Controller
     {
         //Input gambar
         if($file=$request->file('file')){
-            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
+            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="png" or $file->getClientOriginalExtension()=="jpg" or $file->getClientOriginalExtension()=="jpeg" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
                 $name=sha1($file->getClientOriginalName().time()).".".$file->getClientOriginalExtension();
                 $file->move('gambar_produk',$name);
                 $berkas=$name;
@@ -111,7 +111,7 @@ class ProdukController extends Controller
     {
         //Input gambar
         if($file=$request->file('file')){
-            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
+            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="png" or $file->getClientOriginalExtension()=="jpg" or $file->getClientOriginalExtension()=="jpeg" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
                 $name=sha1($file->getClientOriginalName().time()).".".$file->getClientOriginalExtension();
                 $file->move('gambar_produk',$name);
                 $berkas=$name;

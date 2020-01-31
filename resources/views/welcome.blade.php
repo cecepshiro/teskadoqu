@@ -64,7 +64,7 @@
                 @foreach($kategori as $row)
                 <div class="col-lg-4 box_col space_kategori">
                     <div class="box">
-                        <div class="box_image"><img src="{{ asset('assets/images/box_1.jpg') }}" alt=""></div>
+                        <div class="box_image"><img src="{{ asset('/gambar_kategori/'.$row->gambar) }}" width="400px" height="200px" alt=""></div>
                         <div class="box_title trans_200"><a
                                 href="{{ url('beranda/kategori/'.$row->id_kategori ) }}">{{ $row->nama_kategori }}</a>
                         </div>
@@ -102,7 +102,7 @@
                         <div class="product grid-item hot">
                             <div class="product_inner">
                                 <div class="product_image">
-                                    <img src="{{ asset('assets/images/product_1.jpg') }}" alt="">
+                                    <img src="{{ asset('/gambar_produk/'.$row->gambar) }}" width="500px" height="360px" alt="">
                                     <div class="product_tag" style="width:130px;">Rp. {{ number_format($row->harga, 0, '', '.') }}</div>
                                 </div>
                                 <div class="product_content text-center">

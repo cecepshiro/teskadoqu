@@ -11,6 +11,6 @@ class Kategori extends Model
     public $incrementing =false;
     public $timestamps=true; 
     protected $fillable = [
-      'id_kategori','nama_kategori','created_at','updated_at',
+      'id_kategori','nama_kategori','gambar','created_at','updated_at',
     ];
 }

@@ -22,12 +22,17 @@
                             <input type="text" class="form-control" value="{{ $data['nama_kategori'] }}" name="nama_kategori" required autofocus>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-3 control-label">Parent</label>
+                    <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="text"class="form-control" value="{{ $data['parent'] }}" name="parent" required>
+                            <center><img src="{{ asset('/gambar_kategori/'.$data['gambar']) }}"  style="width:30%;" class="img-fluid "></center>
                         </div>
-                    </div> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Gambar</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control" name="file">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-10">
                             <a href="{{ url('admin/kategori/index/') }}" class="btn btn-danger">Batal</a>

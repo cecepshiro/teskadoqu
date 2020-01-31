@@ -59,9 +59,21 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+         //Input gambar
+        if($file=$request->file('file')){
+            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="png" or $file->getClientOriginalExtension()=="jpg" or $file->getClientOriginalExtension()=="jpeg" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
+                $name=sha1($file->getClientOriginalName().time()).".".$file->getClientOriginalExtension();
+                $file->move('gambar_kategori',$name);
+                $berkas=$name;
+            }else{
+                return redirect('admin/kategori/index')
+                ->with(['error' => 'File gambar tidak didukung']);
+            }
+        }
+        
         $data = new Kategori;
         $data->nama_kategori =  $request->nama_kategori;
-        // $data->parent =  $request->parent;
+        $data->gambar =  $berkas;
    		if($data->save()){
             return redirect('admin/kategori/index')
             ->with(['success' => 'Kategori berhasil ditambahkan']);
@@ -122,15 +134,40 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Kategori::where('id_kategori', $id)->first();
-        $data->nama_kategori =  $request->nama_kategori;
-        // $data->parent =  $request->parent;
-   		if($data->save()){
-            return redirect('admin/kategori/index/')
-            ->with(['success' => 'Kategori berhasil diubah']);
+        //Input gambar
+        if($file=$request->file('file')){
+            if($file->getClientOriginalExtension()=="PNG" or $file->getClientOriginalExtension()=="png" or $file->getClientOriginalExtension()=="jpg" or $file->getClientOriginalExtension()=="jpeg" or $file->getClientOriginalExtension()=="JPG" or $file->getClientOriginalExtension()=="JPEG"){
+                $name=sha1($file->getClientOriginalName().time()).".".$file->getClientOriginalExtension();
+                $file->move('gambar_kategori',$name);
+                $berkas=$name;
+            }else{
+                return redirect('admin/kategori/index')
+                ->with(['error' => 'File gambar tidak didukung']);
+            }
+        }
+
+        if($request->file('file')==null){
+             $data = Kategori::where('id_kategori', $id)->first();
+            $data->nama_kategori =  $request->nama_kategori;
+            //  $data->gambar =  $berkas;
+            if($data->save()){
+                return redirect('admin/kategori/index/')
+                ->with(['success' => 'Kategori berhasil diubah']);
+            }else{
+                return redirect('admin/kategori/index/')
+                ->with(['error' => 'Kategori gagal diubah']);
+            }
         }else{
-            return redirect('admin/kategori/index/')
-            ->with(['error' => 'Kategori gagal diubah']);
+             $data = Kategori::where('id_kategori', $id)->first();
+            $data->nama_kategori =  $request->nama_kategori;
+             $data->gambar =  $berkas;
+            if($data->save()){
+                return redirect('admin/kategori/index/')
+                ->with(['success' => 'Kategori berhasil diubah']);
+            }else{
+                return redirect('admin/kategori/index/')
+                ->with(['error' => 'Kategori gagal diubah']);
+            }
         }
     }
 
