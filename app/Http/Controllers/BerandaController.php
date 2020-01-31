@@ -10,7 +10,7 @@ class BerandaController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
+        // $this->middleware(['auth']);
     }
 
     //Halaman index

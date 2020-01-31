@@ -108,6 +108,8 @@
             alert('Produk berhasil ditambahkan ke keranjang')
         }, (error) => {
             // console.log(error);
+            alert('Silahkan login terlebih dahulu');
+            window.location.href = '/login';
         });        
     });
     $('.stok').change(function(){
