@@ -26,7 +26,7 @@ class Produk extends Model
     public static function searchProduct($data){
       return $data = Produk::
       select('*')
-      ->join('kategori','produk.id_kategori','=','kategori.id_kategori')
+      // ->join('kategori','produk.id_kategori','=','kategori.id_kategori')
       ->orWhere('produk.nama_produk','LIKE','%'.$data.'%')
       ->simplePaginate(9);
     }

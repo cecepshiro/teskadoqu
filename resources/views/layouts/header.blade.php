@@ -136,8 +136,7 @@
             </nav>
 
             <div class="search">
-                <form action="post" action="{{ url('beranda/search') }}" class="search_form" id="sidebar_search_form">
-                
+                <form class="search_form" method="get" action="{{ url('beranda/cari') }}" enctype="multipart/form-data" id="sidebar_search_form">
                     <input type="text" class="search_input" placeholder="Cari.." name="cari" required="required">
                     <button type="submit" class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
