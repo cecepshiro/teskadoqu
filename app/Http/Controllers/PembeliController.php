@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pembeli;
 use App\User;
+use Auth;
 
 class PembeliController extends Controller
 {
@@ -20,7 +21,7 @@ class PembeliController extends Controller
     public function index()
     {
         $data = Pembeli::getDetailPembeli();
-        return view('admin.pembeli.list')
+        return view('biodata')
         ->with('data', $data);
     }
 
@@ -31,7 +32,7 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        return view('admin.pembeli.form_tambah');
+        return view('biodata');
     }
 
     /**
@@ -43,18 +44,17 @@ class PembeliController extends Controller
     public function store(Request $request)
     {
         $data = new Pembeli;
-        $data->id_pembeli = $request->id_pembeli;
-        $data->user_id = $request->user_id;
+        $data->user_id = Auth::user()->id;
         $data->tempat_lahir =  $request->tempat_lahir;
         $data->tgl_lahir = $request->tgl_lahir;
         $data->jk = $request->jk;
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
    		if($data->save()){
-            return redirect('admin/pembeli/index')
+            return redirect('beranda/pembeli/index')
             ->with(['success' => 'Pembeli berhasil ditambahkan']);
         }else{
-            return redirect('admin/pembeli/index')
+            return redirect('beranda/pembeli/index')
             ->with(['error' => 'Pembeli gagal ditambahkan']);
         }
     }
@@ -67,10 +67,9 @@ class PembeliController extends Controller
      */
     public function show($id)
     {
-        $data = Pembeli::getDetailPembeliById($id);
-        return view('admin.pembeli.detail')
+        $data = Pembeli::where('user_id',$id)->first();
+        return view('biodata_detail')
         ->with('data', $data);
-        // print_r($data);
     }
 
     /**
@@ -81,8 +80,8 @@ class PembeliController extends Controller
      */
     public function edit($id)
     {
-        $data = Pembeli::find($id);
-        return view('admin.pembeli.form_ubah')
+        $data = Pembeli::getDetailPembeli();
+        return view('biodata')
         ->with('data', $data);
     }
 
@@ -102,10 +101,10 @@ class PembeliController extends Controller
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
    		if($data->save()){
-            return redirect('admin/pembeli/index')
+            return redirect('beranda/pembeli/detail/'.Auth::user()->id)
             ->with(['success' => 'Pembeli berhasil diubah']);
         }else{
-            return redirect('admin/pembeli/index')
+            return redirect('beranda/pembeli/detail/'.Auth::user()->id)
             ->with(['error' => 'Pembeli gagal diubah']);
         }
     }

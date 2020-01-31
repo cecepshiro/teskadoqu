@@ -64,12 +64,12 @@ Route::post('admin/petugas/update/{id}', 'PetugasController@update');
 Route::get('admin/petugas/destroy/{id}', 'PetugasController@destroy');
 
 //Pembeli
-Route::get('admin/pembeli/index/', 'PembeliController@index');
-Route::get('admin/pembeli/create/', 'PembeliController@create');
-Route::post('admin/pembeli/store/', 'PembeliController@store');
-Route::get('admin/pembeli/detail/{id}', 'PembeliController@show');
-Route::get('admin/pembeli/edit/{id}', 'PembeliController@edit');
-Route::post('admin/pembeli/update/{id}', 'PembeliController@update');
+Route::get('beranda/pembeli/index/', 'PembeliController@index');
+Route::get('beranda/pembeli/create/', 'PembeliController@create');
+Route::post('beranda/pembeli/store/', 'PembeliController@store');
+Route::get('beranda/pembeli/detail/{id}', 'PembeliController@show');
+Route::get('beranda/pembeli/edit/{id}', 'PembeliController@edit');
+Route::post('beranda/pembeli/update/{id}', 'PembeliController@update');
 Route::get('admin/pembeli/destroy/{id}', 'PembeliController@destroy');
 
 //Transaksi

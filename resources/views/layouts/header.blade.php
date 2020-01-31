@@ -119,6 +119,14 @@
                     <li><a href="{{ url('/') }}">Beranda<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('beranda/kategori') }}">Kategori<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <li><a href="{{ url('beranda/produk') }}">Produk<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <?php
+                        $profil = DB::table('pembeli')->where('user_id', Auth::user()->id)->get();
+                    ?>
+                    @if(count($profil) > 0)
+                    <li><a href="{{ url('beranda/pembeli/detail/'.Auth::user()->id) }}">Profil<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    @else
+                     <li><a href="{{ url('beranda/pembeli/create') }}">Profil<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    @endif
                     <li><a href="{{ url('beranda/transaksi/list') }}">Daftar Transaksi<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
