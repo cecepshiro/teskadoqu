@@ -444,4 +444,10 @@ class TransaksiController extends Controller
         }
     }
 
+    public function download($id){
+        $data=Transaksi::where('id_transaksi',$id)->first();
+        $pathToFile='/bukti'.'/'.$data->gambar;
+        return response()->download(public_path($pathToFile));
+    }
+
 }

@@ -91,6 +91,7 @@ Route::get('admin/transaksi/done', 'TransaksiController@done');
 Route::get('admin/transaksi/kirim/{id}', 'TransaksiController@kirim');
 Route::post('admin/transaksi/resi/{id}', 'TransaksiController@resi');
 Route::get('beranda/transaksi/terima/{id}', 'TransaksiController@terima');
+Route::get('admin/transaksi/download/{id}', 'TransaksiController@download');
 
 //Detail Transaksi
 Route::get('detailtransaksi/index/', 'DetailTransaksiController@index');

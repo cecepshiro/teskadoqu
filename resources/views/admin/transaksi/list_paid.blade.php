@@ -96,8 +96,8 @@
                             <td>
                                 <a href="{{ url('admin/transaksi/detail', $row->id_transaksi) }}" class="btn btn-success"
                                     data-toggle="tooltip" title="Detail Data Transaksi">Detail</a>
-                                    <a href="{{ url('admin/transaksi/detail', $row->id_transaksi) }}" class="btn btn-warning"
-                                    data-toggle="tooltip" title="Lihat Bukti Transfer">Bukti</a>
+                                    <a href="{{ url('admin/transaksi/download', $row->id_transaksi) }}" class="btn btn-warning"
+                                    data-toggle="tooltip" title="Lihat Bukti Transfer">Bukti TF</a>
                                      <a href="{{ url('admin/transaksi/kirim', $row->id_transaksi) }}" class="btn btn-primary"
                                     data-toggle="tooltip" title="Kirim Produk">Kirim</a>
                             </td>
