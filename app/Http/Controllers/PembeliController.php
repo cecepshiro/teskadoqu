@@ -25,6 +25,13 @@ class PembeliController extends Controller
         ->with('data', $data);
     }
 
+    public function index_admin()
+    {
+        $data = Pembeli::getDetailPembeli();
+        return view('admin.pembeli.list')
+        ->with('data', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

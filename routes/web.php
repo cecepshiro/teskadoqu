@@ -64,6 +64,7 @@ Route::get('admin/petugas/destroy/{id}', 'PetugasController@destroy');
 
 //Pembeli
 Route::get('beranda/pembeli/index/', 'PembeliController@index');
+Route::get('admin/pembeli/index_admin/', 'PembeliController@index_admin');
 Route::get('beranda/pembeli/create/', 'PembeliController@create');
 Route::post('beranda/pembeli/store/', 'PembeliController@store');
 Route::get('beranda/pembeli/detail/{id}', 'PembeliController@show');

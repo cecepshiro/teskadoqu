@@ -83,7 +83,7 @@
                     <span>Data Admin</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/pembeli/index') }}">
+                <a class="nav-link" href="{{ url('/admin/pembeli/index_admin') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Pembeli</span></a>
             </li>
